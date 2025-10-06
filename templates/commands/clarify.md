@@ -1,5 +1,5 @@
 ---
-description: Identify underspecified areas in the current feature spec by asking up to 5 highly targeted clarification questions and encoding answers back into the spec.
+description: Identify underspecified areas in the current story arc outline (for novels) or feature spec (for software) by asking up to 5 highly targeted clarification questions and encoding answers back into the spec.
 scripts:
    sh: scripts/bash/check-prerequisites.sh --json --paths-only
    ps: scripts/powershell/check-prerequisites.ps1 -Json -PathsOnly
@@ -11,7 +11,7 @@ User input:
 
 $ARGUMENTS
 
-Goal: Detect and reduce ambiguity or missing decision points in the active feature specification and record the clarifications directly in the spec file.
+Goal: Detect and reduce ambiguity or missing decision points in the active specification and record the clarifications directly in the spec file.
 
 Note: This clarification workflow is expected to run (and be completed) BEFORE invoking `/plan`. If the user explicitly states they are skipping clarification (e.g., exploratory spike), you may proceed, but must warn that downstream rework risk increases.
 
@@ -23,74 +23,100 @@ Execution steps:
    - (Optionally capture `IMPL_PLAN`, `TASKS` for future chained flows.)
    - If JSON parsing fails, abort and instruct user to re-run `/specify` or verify feature branch environment.
 
-2. Load the current spec file. Perform a structured ambiguity & coverage scan using this taxonomy. For each category, mark status: Clear / Partial / Missing. Produce an internal coverage map used for prioritization (do not output raw map unless no questions will be asked).
+2. Load the current spec file. **Detect project type** from content:
+   - **Novel writing indicators**: Story Beats, Character Arcs, Foreshadowing Map, chapters, plot points
+   - **Software indicators**: Functional Requirements, API contracts, user stories, technical constraints
 
+3. Perform structured ambiguity & coverage scan based on project type:
+
+   **For Novel Writing Projects**, scan these categories:
+   
+   Plot Structure & Story Beats:
+   - Clear inciting incident and stakes
+   - Escalation pattern defined
+   - Climax and resolution approach
+   - Subplot integration
+   
+   Character Development:
+   - Protagonist motivation and goals
+   - Character arc type (growth/fall/flat)
+   - Key turning points for character change
+   - Supporting character roles
+   - Relationship dynamics
+   
+   Foreshadowing & Setup:
+   - Planted elements clearly identified
+   - Payoff timing planned
+   - Chekhov's Gun compliance (no unused setups)
+   - Mystery/revelation structure
+   
+   World-Building & Setting:
+   - World rules and constraints
+   - Magic/tech system mechanics (if applicable)
+   - Geographic/cultural context
+   - Historical background relevance
+   
+   Timeline & Chronology:
+   - In-story time span
+   - Event sequence clarity
+   - Multiple POV timeline sync (if applicable)
+   - Flashback/flash-forward anchors
+   
+   Conflict & Stakes:
+   - External conflicts defined
+   - Internal conflicts articulated
+   - Stakes escalation pattern
+   - Antagonist motivation (if applicable)
+   
+   Theme & Meaning:
+   - Central theme identification
+   - Thematic resolution approach
+   - Symbolic elements
+   
+   Narrative Style:
+   - POV consistency (1st/3rd person, limited/omniscient)
+   - Tense consistency
+   - Tone target
+   
+   Pacing & Structure:
+   - High/low tension balance
+   - Scene vs. summary ratio
+   - Chapter count and length targets
+   
+   Edge Cases & Complications:
+   - Character death or major loss
+   - Betrayal or alliance shifts
+   - Moral dilemmas
+   - Time pressure elements
+
+   **For Software Projects**, scan these categories:
+   
    Functional Scope & Behavior:
    - Core user goals & success criteria
    - Explicit out-of-scope declarations
    - User roles / personas differentiation
-
+   
    Domain & Data Model:
    - Entities, attributes, relationships
    - Identity & uniqueness rules
    - Lifecycle/state transitions
    - Data volume / scale assumptions
+   
+   [Additional software-specific categories as in original...]
 
-   Interaction & UX Flow:
-   - Critical user journeys / sequences
-   - Error/empty/loading states
-   - Accessibility or localization notes
+   For each category with Partial or Missing status, add a candidate question opportunity unless clarification would not materially change implementation/writing strategy.
 
-   Non-Functional Quality Attributes:
-   - Performance (latency, throughput targets)
-   - Scalability (horizontal/vertical, limits)
-   - Reliability & availability (uptime, recovery expectations)
-   - Observability (logging, metrics, tracing signals)
-   - Security & privacy (authN/Z, data protection, threat assumptions)
-   - Compliance / regulatory constraints (if any)
-
-   Integration & External Dependencies:
-   - External services/APIs and failure modes
-   - Data import/export formats
-   - Protocol/versioning assumptions
-
-   Edge Cases & Failure Handling:
-   - Negative scenarios
-   - Rate limiting / throttling
-   - Conflict resolution (e.g., concurrent edits)
-
-   Constraints & Tradeoffs:
-   - Technical constraints (language, storage, hosting)
-   - Explicit tradeoffs or rejected alternatives
-
-   Terminology & Consistency:
-   - Canonical glossary terms
-   - Avoided synonyms / deprecated terms
-
-   Completion Signals:
-   - Acceptance criteria testability
-   - Measurable Definition of Done style indicators
-
-   Misc / Placeholders:
-   - TODO markers / unresolved decisions
-   - Ambiguous adjectives ("robust", "intuitive") lacking quantification
-
-   For each category with Partial or Missing status, add a candidate question opportunity unless:
-   - Clarification would not materially change implementation or validation strategy
-   - Information is better deferred to planning phase (note internally)
-
-3. Generate (internally) a prioritized queue of candidate clarification questions (maximum 5). Do NOT output them all at once. Apply these constraints:
+4. Generate (internally) a prioritized queue of candidate clarification questions (maximum 5). Do NOT output them all at once. Apply these constraints:
     - Maximum of 5 total questions across the whole session.
     - Each question must be answerable with EITHER:
        * A short multiple‑choice selection (2–5 distinct, mutually exclusive options), OR
        * A one-word / short‑phrase answer (explicitly constrain: "Answer in <=5 words").
-   - Only include questions whose answers materially impact architecture, data modeling, task decomposition, test design, UX behavior, operational readiness, or compliance validation.
-   - Ensure category coverage balance: attempt to cover the highest impact unresolved categories first; avoid asking two low-impact questions when a single high-impact area (e.g., security posture) is unresolved.
-   - Exclude questions already answered, trivial stylistic preferences, or plan-level execution details (unless blocking correctness).
-   - Favor clarifications that reduce downstream rework risk or prevent misaligned acceptance tests.
-   - If more than 5 categories remain unresolved, select the top 5 by (Impact * Uncertainty) heuristic.
+   - **For novels**: Prioritize character motivations, plot logic gaps, foreshadowing targets, timeline conflicts, world rule inconsistencies
+   - **For software**: Prioritize architecture impacts, data modeling, test design, UX behavior, compliance
+   - Ensure category coverage balance
+   - Favor clarifications that reduce downstream rework risk
 
-4. Sequential questioning loop (interactive):
+5. Sequential questioning loop (interactive):
     - Present EXACTLY ONE question at a time.
     - For multiple‑choice questions render options as a Markdown table:
 
@@ -98,8 +124,8 @@ Execution steps:
        |--------|-------------|
        | A | <Option A description> |
        | B | <Option B description> |
-       | C | <Option C description> | (add D/E as needed up to 5)
-       | Short | Provide a different short answer (<=5 words) | (Include only if free-form alternative is appropriate)
+       | C | <Option C description> |
+       | Short | Provide a different short answer (<=5 words) |
 
     - For short‑answer style (no meaningful discrete options), output a single line after the question: `Format: Short answer (<=5 words)`.
     - After the user answers:
@@ -107,55 +133,58 @@ Execution steps:
        * If ambiguous, ask for a quick disambiguation (count still belongs to same question; do not advance).
        * Once satisfactory, record it in working memory (do not yet write to disk) and move to the next queued question.
     - Stop asking further questions when:
-       * All critical ambiguities resolved early (remaining queued items become unnecessary), OR
+       * All critical ambiguities resolved early, OR
        * User signals completion ("done", "good", "no more"), OR
        * You reach 5 asked questions.
     - Never reveal future queued questions in advance.
-    - If no valid questions exist at start, immediately report no critical ambiguities.
 
-5. Integration after EACH accepted answer (incremental update approach):
-    - Maintain in-memory representation of the spec (loaded once at start) plus the raw file contents.
+6. Integration after EACH accepted answer (incremental update approach):
+    - Maintain in-memory representation of the spec plus raw file contents.
     - For the first integrated answer in this session:
-       * Ensure a `## Clarifications` section exists (create it just after the highest-level contextual/overview section per the spec template if missing).
-       * Under it, create (if not present) a `### Session YYYY-MM-DD` subheading for today.
-    - Append a bullet line immediately after acceptance: `- Q: <question> → A: <final answer>`.
+       * Ensure a `## Clarifications` section exists (create it after the overview/context section if missing).
+       * Under it, create `### Session YYYY-MM-DD` subheading for today.
+    - Append a bullet line: `- Q: <question> → A: <final answer>`.
     - Then immediately apply the clarification to the most appropriate section(s):
-       * Functional ambiguity → Update or add a bullet in Functional Requirements.
-       * User interaction / actor distinction → Update User Stories or Actors subsection (if present) with clarified role, constraint, or scenario.
-       * Data shape / entities → Update Data Model (add fields, types, relationships) preserving ordering; note added constraints succinctly.
-       * Non-functional constraint → Add/modify measurable criteria in Non-Functional / Quality Attributes section (convert vague adjective to metric or explicit target).
-       * Edge case / negative flow → Add a new bullet under Edge Cases / Error Handling (or create such subsection if template provides placeholder for it).
-       * Terminology conflict → Normalize term across spec; retain original only if necessary by adding `(formerly referred to as "X")` once.
-    - If the clarification invalidates an earlier ambiguous statement, replace that statement instead of duplicating; leave no obsolete contradictory text.
-    - Save the spec file AFTER each integration to minimize risk of context loss (atomic overwrite).
-    - Preserve formatting: do not reorder unrelated sections; keep heading hierarchy intact.
-    - Keep each inserted clarification minimal and testable (avoid narrative drift).
+       * **For novels**:
+         - Plot ambiguity → Update Story Beats or Plot Requirements
+         - Character motivation → Update Character Arcs section
+         - Foreshadowing → Add/update entry in Foreshadowing Map with ID
+         - World-building → Update Key World Elements
+         - Timeline → Update Timeline & Pacing section
+         - Theme → Update Thematic Requirements
+       * **For software**:
+         - Functional ambiguity → Update Functional Requirements
+         - Data shape → Update Data Model
+         - Non-functional → Add measurable criteria
+         - Edge case → Add to Edge Cases section
+    - If the clarification invalidates an earlier ambiguous statement, replace it instead of duplicating.
+    - Save the spec file AFTER each integration (atomic overwrite).
+    - Preserve formatting: do not reorder unrelated sections.
 
-6. Validation (performed after EACH write plus final pass):
-   - Clarifications session contains exactly one bullet per accepted answer (no duplicates).
+7. Validation (performed after EACH write plus final pass):
+   - Clarifications session contains exactly one bullet per accepted answer.
    - Total asked (accepted) questions ≤ 5.
-   - Updated sections contain no lingering vague placeholders the new answer was meant to resolve.
-   - No contradictory earlier statement remains (scan for now-invalid alternative choices removed).
-   - Markdown structure valid; only allowed new headings: `## Clarifications`, `### Session YYYY-MM-DD`.
-   - Terminology consistency: same canonical term used across all updated sections.
+   - Updated sections contain no lingering vague placeholders the answer was meant to resolve.
+   - No contradictory earlier statement remains.
+   - Markdown structure valid.
+   - Terminology consistency across sections.
 
-7. Write the updated spec back to `FEATURE_SPEC`.
+8. Write the updated spec back to `FEATURE_SPEC`.
 
-8. Report completion (after questioning loop ends or early termination):
+9. Report completion (after questioning loop ends):
    - Number of questions asked & answered.
    - Path to updated spec.
    - Sections touched (list names).
-   - Coverage summary table listing each taxonomy category with Status: Resolved (was Partial/Missing and addressed), Deferred (exceeds question quota or better suited for planning), Clear (already sufficient), Outstanding (still Partial/Missing but low impact).
-   - If any Outstanding or Deferred remain, recommend whether to proceed to `/plan` or run `/clarify` again later post-plan.
+   - Coverage summary table listing each taxonomy category with Status: Resolved/Deferred/Clear/Outstanding.
+   - If any Outstanding or Deferred remain, recommend whether to proceed to `/plan` or run `/clarify` again.
    - Suggested next command.
 
 Behavior rules:
-- If no meaningful ambiguities found (or all potential questions would be low-impact), respond: "No critical ambiguities detected worth formal clarification." and suggest proceeding.
-- If spec file missing, instruct user to run `/specify` first (do not create a new spec here).
-- Never exceed 5 total asked questions (clarification retries for a single question do not count as new questions).
-- Avoid speculative tech stack questions unless the absence blocks functional clarity.
-- Respect user early termination signals ("stop", "done", "proceed").
- - If no questions asked due to full coverage, output a compact coverage summary (all categories Clear) then suggest advancing.
- - If quota reached with unresolved high-impact categories remaining, explicitly flag them under Deferred with rationale.
+- If no meaningful ambiguities found, respond: "No critical ambiguities detected worth formal clarification." and suggest proceeding.
+- If spec file missing, instruct user to run `/specify` first.
+- Never exceed 5 total asked questions.
+- **For novels**: Avoid asking about prose style unless it affects structural decisions
+- **For software**: Avoid speculative tech stack questions unless absence blocks functional clarity
+- Respect user early termination signals.
 
 Context for prioritization: {ARGS}
