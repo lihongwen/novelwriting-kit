@@ -13,7 +13,7 @@
     <strong>📚 Also adapted for <a href="./NOVEL-WRITING-GUIDE.md">structured novel writing</a> - perfect for 100万字+ epic novels with complex plotlines and foreshadowing management.</strong>
 </p>
 
-[![Release](https://github.com/github/spec-kit/actions/workflows/release.yml/badge.svg)](https://github.com/github/spec-kit/actions/workflows/release.yml)
+[![Release](https://github.com/lihongwen/novelwriting-kit/actions/workflows/release.yml/badge.svg)](https://github.com/lihongwen/novelwriting-kit/actions/workflows/release.yml)
 
 ---
 
@@ -100,7 +100,7 @@ Choose your preferred installation method:
 Install once and use everywhere:
 
 ```bash
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+uv tool install specify-cli --from git+https://github.com/lihongwen/novelwriting-kit.git
 ```
 
 Then use the tool directly:
@@ -115,7 +115,7 @@ specify check
 Run directly without installing:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>
+uvx --from git+https://github.com/lihongwen/novelwriting-kit.git specify init <PROJECT_NAME>
 ```
 
 **Benefits of persistent installation:**

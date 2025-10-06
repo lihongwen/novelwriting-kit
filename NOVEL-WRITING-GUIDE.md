@@ -21,7 +21,7 @@
 
 ```bash
 # 安装 Specify CLI
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+uv tool install specify-cli --from git+https://github.com/lihongwen/novelwriting-kit.git
 
 # 创建小说项目（选择你喜欢的 AI 助手）
 specify init my-novel --ai claude
