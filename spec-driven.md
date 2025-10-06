@@ -1,5 +1,7 @@
 # Specification-Driven Development (SDD)
 
+> **Note**: While this document focuses on software development, the SDD methodology has been successfully adapted for creative writing, particularly for managing complex, long-form novels (100万字+) with intricate plotlines, foreshadowing, and character arcs. For novel writing guidance, see [NOVEL-WRITING-GUIDE.md](./NOVEL-WRITING-GUIDE.md).
+
 ## The Power Inversion
 
 For decades, code has been king. Specifications served code—they were the scaffolding we built and then discarded once the "real work" of coding began. We wrote PRDs to guide development, created design docs to inform implementation, drew diagrams to visualize architecture. But these were always subordinate to the code itself. Code was truth. Everything else was, at best, good intentions. Code was the source of truth, and as it moved forward, specs rarely kept pace. As the asset (code) and the implementation are one, it's not easy to have a parallel implementation without trying to build from the code.
