@@ -1,5 +1,5 @@
 ---
-description: Perform consistency and quality analysis. For novels - verify foreshadowing resolution, timeline coherence, character consistency, world-building adherence. For software - check spec/plan/tasks cross-artifact alignment and constitution compliance.
+description: Pre-implementation quality gate - analyze spec/plan/tasks consistency BEFORE writing/coding. For novels - verify foreshadowing is mapped, timeline is planned coherently, character arcs are complete. For software - check requirements coverage, constitution compliance, eliminate ambiguities. Run AFTER /tasks, BEFORE /implement to catch issues early.
 scripts:
   sh: scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks
   ps: scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks
@@ -11,7 +11,9 @@ User input:
 
 $ARGUMENTS
 
-Goal: Identify inconsistencies, plot holes, dangling foreshadowing, timeline contradictions (for novels) OR ambiguities, duplications, underspecified items (for software) across artifacts before or after implementation. This command MUST run only after `/tasks` has successfully produced a complete `tasks.md`.
+Goal: **Pre-implementation quality gate** - Identify issues in planning phase BEFORE starting implementation. Catch inconsistencies, plot holes, timeline contradictions (novels) OR ambiguities, duplications, coverage gaps (software) across spec/plan/tasks. This prevents costly rework during implementation. 
+
+**Run AFTER `/tasks`, BEFORE `/implement`** - This is your final checkpoint before writing/coding begins.
 
 STRICTLY READ-ONLY: Do **not** modify any files. Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually).
 
@@ -35,19 +37,23 @@ Execution steps:
      * All items with IDs (F001, F002, etc.)
      * Setup chapters and payoff chapters
      * Current status: PLANTED / HINTED / RESOLVED / ABANDONED
-   - **Timeline model**: Load /timeline/master.md
-     * Event sequence with in-story dates
-     * Character locations per chapter
-     * Duration tracking
-   - **Character arcs**: Load /characters/*.md files
-     * Character state per chapter
-     * Arc progress tracking
-     * Relationship evolution
-   - **World rules**: Load /world-building/rules.md
-     * Magic/tech systems
-     * Physical laws
-     * Cultural constraints
-   - **Chapter content**: Scan chapters/ directory for written content
+   - **Timeline model**: From plan.md and scene-breakdown.md PLANS
+     * Planned event sequence with in-story dates
+     * Planned character locations per scene
+     * Expected duration tracking
+     * **Check for contradictions in PLAN, not implementation**
+   - **Character arcs**: From spec.md Character Arcs and plan.md character-states.md PLANS
+     * Planned character state progression
+     * Planned arc trajectory
+     * Expected relationship evolution
+     * **Verify planning is complete, not checking actual writing yet**
+   - **World rules**: From constitution.md and spec.md world-building
+     * Magic/tech systems as defined in planning
+     * Physical laws as documented
+     * Cultural constraints as specified
+   - **Scene coverage**: From plan.md scene-breakdown.md
+     * Check if all plot points have scenes planned
+     * Verify scene purposes align with story beats
    - **Constitution rules**: Extract principle names and MUST/SHOULD normative statements
 
 4. **For Novel Writing - Detection passes**:
@@ -58,18 +64,20 @@ Execution steps:
       - Identify Chekhov's Gun violations (important items introduced but never used)
       - Check for premature reveals (payoff before sufficient buildup)
 
-   B. **Timeline Consistency Check**:
-      - Detect chronological contradictions (event A after event B in timeline, but reversed in text)
-      - Verify character locations are physically possible (travel time realistic)
-      - Check for duplicate or conflicting event timestamps
-      - Verify flashback/flash-forward anchors are clear
+   B. **Timeline Planning Check**:
+      - Detect chronological contradictions in PLANNED event sequence
+      - Verify planned character locations are physically possible (travel time realistic in plan)
+      - Check for duplicate or conflicting planned event timestamps
+      - Verify planned flashback/flash-forward scenes have clear temporal anchors
+      - **NOTE**: Checks scene-breakdown.md plan, not chapters/ content
 
-   C. **Character Consistency Check**:
-      - Flag personality contradictions (character acts against established traits without justification)
-      - Check for knowledge inconsistencies (character knows something they shouldn't)
-      - Verify character arc progression is gradual (no sudden unexplained changes)
-      - Check relationship evolution logic
-      - Flag physical description mismatches across chapters
+   C. **Character Arc Planning Check**:
+      - Verify character arcs in spec.md have complete progression planned in character-states.md
+      - Check planned character development is gradual (no sudden jumps in plan)
+      - Verify all major character decisions in plot have scenes that justify them
+      - Check relationship evolution has scenes planned for key moments
+      - Ensure character traits in spec match scene behavior descriptions in breakdown
+      - **NOTE**: Validates PLAN completeness, not actual writing
 
    D. **World-Building Consistency Check**:
       - Identify magic/tech system rule violations
@@ -176,10 +184,13 @@ Execution steps:
    - Low Issues: 12
 
 9. At end of report, output Next Actions block:
-   - If CRITICAL issues exist: **Must resolve before proceeding or publishing**
-   - If only HIGH: Strongly recommend addressing
-   - If only LOW/MEDIUM: May proceed but fix improves quality
-   - Provide explicit fix suggestions
+   - If CRITICAL issues exist: **Must resolve BEFORE `/implement` - fix planning now to avoid massive rework**
+   - If only HIGH: Strongly recommend fixing plans now - much easier than fixing during writing
+   - If only LOW/MEDIUM: Safe to proceed to `/implement`, but addressing improves quality
+   - Provide explicit fix suggestions (usually "update spec.md" or "revise scene-breakdown.md")
+   
+   **Recommended flow after /analyze**:
+   - Fix issues → Re-run `/plan` or manually update planning docs → Re-run `/analyze` → When clean, run `/implement`
 
 10. Ask the user: "Would you like me to suggest concrete remediation edits for the top N issues?" (Do NOT apply them automatically.)
 

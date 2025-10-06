@@ -78,11 +78,11 @@ specify init my-novel --ai claude
 # Generate writing tasks with foreshadowing tracking
 /tasks
 
-# Execute writing with automatic consistency checks
-/implement
-
-# Verify quality: foreshadowing resolution, timeline coherence, character consistency
+# Verify quality BEFORE writing: check plans for consistency, gaps, contradictions
 /analyze
+
+# Execute writing with automatic tracking updates
+/implement
 ```
 
 **👉 [Read the Complete Novel Writing Guide](./NOVEL-WRITING-GUIDE.md)** for detailed instructions, examples, and best practices.
