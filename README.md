@@ -2,10 +2,15 @@
     <img src="./media/logo_small.webp"/>
     <h1>🌱 Spec Kit</h1>
     <h3><em>Build high-quality software faster.</em></h3>
+    <h3><em>Write high-quality novels systematically.</em></h3>
 </div>
 
 <p align="center">
     <strong>An effort to allow organizations to focus on product scenarios rather than writing undifferentiated code with the help of Spec-Driven Development.</strong>
+</p>
+
+<p align="center">
+    <strong>📚 Also adapted for <a href="./NOVEL-WRITING-GUIDE.md">structured novel writing</a> - perfect for 100万字+ epic novels with complex plotlines and foreshadowing management.</strong>
 </p>
 
 [![Release](https://github.com/github/spec-kit/actions/workflows/release.yml/badge.svg)](https://github.com/github/spec-kit/actions/workflows/release.yml)
@@ -15,6 +20,7 @@
 ## Table of Contents
 
 - [🤔 What is Spec-Driven Development?](#-what-is-spec-driven-development)
+- [📚 **NEW: Novel Writing with Spec Kit**](#-novel-writing-with-spec-kit)
 - [⚡ Get started](#-get-started)
 - [📽️ Video Overview](#️-video-overview)
 - [🤖 Supported AI Agents](#-supported-ai-agents)
@@ -34,6 +40,54 @@
 ## 🤔 What is Spec-Driven Development?
 
 Spec-Driven Development **flips the script** on traditional software development. For decades, code has been king — specifications were just scaffolding we built and discarded once the "real work" of coding began. Spec-Driven Development changes this: **specifications become executable**, directly generating working implementations rather than just guiding them.
+
+## 📚 Novel Writing with Spec Kit
+
+**The same structured approach works for creative writing!**
+
+Spec Kit's methodology has been adapted for **systematic novel writing**, especially for:
+- 📖 **Long-form novels** (100万字+)
+- 🔮 **Complex world-building** (fantasy, sci-fi, historical)
+- 🎭 **Multi-POV narratives** with intricate plotlines
+- 🧩 **Foreshadowing management** - never lose track of plot threads
+- ⏰ **Timeline consistency** - avoid chronological contradictions
+
+### Key Features for Novel Writing:
+
+1. **Constitution System** - Define your world rules, character principles, and narrative style
+2. **Foreshadowing Tracker** - Log every setup and payoff to ensure no dangling plot threads
+3. **Timeline Management** - Track events chronologically across multiple POVs
+4. **Character Arc Tracking** - Ensure consistent character development over 100+ chapters
+5. **Quality Gates** - Automated checks for world consistency, character integrity, pacing
+
+### Quick Example:
+
+```bash
+# Initialize a novel project
+specify init my-novel --ai claude
+
+# Establish world-building rules and writing principles
+/constitution
+
+# Create arc/volume outline with character arcs and plot beats
+/specify
+
+# Plan detailed chapter structure and scenes
+/plan
+
+# Generate writing tasks with foreshadowing tracking
+/tasks
+
+# Execute writing with automatic consistency checks
+/implement
+
+# Verify quality: foreshadowing resolution, timeline coherence, character consistency
+/analyze
+```
+
+**👉 [Read the Complete Novel Writing Guide](./NOVEL-WRITING-GUIDE.md)** for detailed instructions, examples, and best practices.
+
+---
 
 ## ⚡ Get started
 

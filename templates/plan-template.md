@@ -1,225 +1,315 @@
 ---
-description: "Implementation plan template for feature development"
+description: "Chapter planning template for detailed scene and narrative development"
 scripts:
   sh: scripts/bash/update-agent-context.sh __AGENT__
   ps: scripts/powershell/update-agent-context.ps1 -AgentType __AGENT__
 ---
 
-# Implementation Plan: [FEATURE]
+# Chapter Plan: [ARC NAME]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `[###-arc-name]` | **Date**: [DATE] | **Outline**: [link to spec.md]
+**Input**: Story arc outline from `/specs/[###-arc-name]/spec.md`
 
 ## Execution Flow (/plan command scope)
 ```
-1. Load feature spec from Input path
-   → If not found: ERROR "No feature spec at {path}"
-2. Fill Technical Context (scan for NEEDS CLARIFICATION)
-   → Detect Project Type from file system structure or context (web=frontend+backend, mobile=app+api)
-   → Set Structure Decision based on project type
-3. Fill the Constitution Check section based on the content of the constitution document.
+1. Load story arc outline from Input path
+   → If not found: ERROR "No story outline at {path}"
+2. Fill Narrative Context (scan for NEEDS CLARIFICATION)
+   → Detect POV style, narrative voice, chapter structure
+   → Set Writing Approach based on genre and tone
+3. Fill the Constitution Check section based on writing constitution
 4. Evaluate Constitution Check section below
-   → If violations exist: Document in Complexity Tracking
-   → If no justification possible: ERROR "Simplify approach first"
+   → Check: World consistency, Character integrity, Foreshadowing tracking
+   → If violations exist: Document in Narrative Concerns
    → Update Progress Tracking: Initial Constitution Check
 5. Execute Phase 0 → research.md
-   → If NEEDS CLARIFICATION remain: ERROR "Resolve unknowns"
-6. Execute Phase 1 → contracts, data-model.md, quickstart.md, agent-specific template file (e.g., `CLAUDE.md` for Claude Code, `.github/copilot-instructions.md` for GitHub Copilot, `GEMINI.md` for Gemini CLI, `QWEN.md` for Qwen Code, or `AGENTS.md` for all other agents).
+   → Research historical/technical details for accuracy
+   → Resolve all [NEEDS CLARIFICATION] from outline
+6. Execute Phase 1 → scene-breakdown.md, character-states.md, continuity-check.md
+   → Create detailed scene-by-scene breakdown
+   → Document character emotional states and development
+   → Cross-reference timeline and foreshadowing
 7. Re-evaluate Constitution Check section
-   → If new violations: Refactor design, return to Phase 1
-   → Update Progress Tracking: Post-Design Constitution Check
-8. Plan Phase 2 → Describe task generation approach (DO NOT create tasks.md)
+   → Verify no new consistency issues introduced
+   → Update Progress Tracking: Post-Planning Constitution Check
+8. Plan Phase 2 → Describe writing task generation approach (DO NOT create tasks.md)
 9. STOP - Ready for /tasks command
 ```
 
-**IMPORTANT**: The /plan command STOPS at step 7. Phases 2-4 are executed by other commands:
-- Phase 2: /tasks command creates tasks.md
-- Phase 3-4: Implementation execution (manual or via tools)
+**IMPORTANT**: The /plan command STOPS at step 8. Phase 2 is executed by /tasks command:
+- Phase 2: /tasks command creates tasks.md (writing tasks breakdown)
+- Phase 3: /implement command executes actual writing
 
 ## Summary
-[Extract from feature spec: primary requirement + technical approach from research]
+[Extract from arc outline: main plot thread + key character developments + major themes]
 
-## Technical Context
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+## Narrative Context
+**POV Style**: [First Person / Third Person Limited / Third Person Omniscient / Multiple POV or NEEDS CLARIFICATION]  
+**Narrative Voice**: [Past Tense / Present Tense, tone: formal/casual/poetic or NEEDS CLARIFICATION]  
+**Chapter Structure**: [Standard chapters / Scene breaks / Date/location headers or NEEDS CLARIFICATION]  
+**Target Chapter Count**: [e.g., 50 chapters or NEEDS CLARIFICATION]  
+**Target Word Count per Chapter**: [e.g., 3000-5000 words or NEEDS CLARIFICATION]
+**Genre Conventions**: [e.g., Mystery requires clue planting, Romance requires emotional beats or NEEDS CLARIFICATION]  
+**Tone**: [Dark/Light/Humorous/Serious/Epic or NEEDS CLARIFICATION]  
+**Pacing Strategy**: [Fast-paced action / Slow-burn character study / Balanced or NEEDS CLARIFICATION]  
+**Worldbuilding Density**: [High (extensive description) / Medium / Low (minimal exposition) or NEEDS CLARIFICATION]
 
 ## Constitution Check
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+*GATE: Must pass before Phase 0 research. Re-check after Phase 1 planning.*
 
-[Gates determined based on constitution file]
+### World Consistency Gate
+- [ ] No contradictions with established world rules from `/world-building/rules.md`
+- [ ] New locations/magic systems align with existing canon
+- [ ] Technology/supernatural elements follow documented constraints
+- [ ] Timeline events don't conflict with prior chapters
 
-## Project Structure
+### Character Arc Integrity Gate
+- [ ] Character behaviors align with personality profiles in `/characters/`
+- [ ] Character growth is gradual and event-justified
+- [ ] No out-of-character actions for plot convenience
+- [ ] Relationships evolve logically from previous states
 
-### Documentation (this feature)
+### Foreshadowing Management Gate
+- [ ] All foreshadowing setups logged in `/foreshadowing/tracker.md`
+- [ ] Planned payoffs are within acceptable chapter range (<50 chapters)
+- [ ] Previous arc foreshadowing addressed or explicitly deferred
+- [ ] No Chekhov's Gun violations (unused important elements)
+
+### Timeline Accuracy Gate
+- [ ] Events align with master timeline in `/timeline/master.md`
+- [ ] Multiple POV timelines synchronized at convergence points
+- [ ] Flashback temporal anchors are clear
+- [ ] No chronological contradictions
+
+### Pacing & Rhythm Gate
+- [ ] High/low tension chapters balanced
+- [ ] Each chapter has clear conflict or progression
+- [ ] No more than 3 consecutive exposition-heavy chapters
+- [ ] Chapter hooks maintain reader engagement
+
+## Story Documentation Structure
+
+### Planning Documents (this arc)
 ```
-specs/[###-feature]/
-├── plan.md              # This file (/plan command output)
-├── research.md          # Phase 0 output (/plan command)
-├── data-model.md        # Phase 1 output (/plan command)
-├── quickstart.md        # Phase 1 output (/plan command)
-├── contracts/           # Phase 1 output (/plan command)
-└── tasks.md             # Phase 2 output (/tasks command - NOT created by /plan)
-```
-
-### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
-```
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+specs/[###-arc-name]/
+├── spec.md                 # Story arc outline (from /specify command)
+├── plan.md                 # This file (/plan command output)
+├── research.md             # Phase 0: Historical/technical research
+├── scene-breakdown.md      # Phase 1: Detailed scene-by-scene plan
+├── character-states.md     # Phase 1: Character emotional journey tracking
+├── continuity-check.md     # Phase 1: Timeline & foreshadowing verification
+└── tasks.md                # Phase 2: Writing tasks (/tasks command output)
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+### Story Content (repository root)
+```
+chapters/
+├── 001-opening.md          # Chapter content (from /implement command)
+├── 002-inciting-incident.md
+├── 003-first-complication.md
+└── ...
 
-## Phase 0: Outline & Research
-1. **Extract unknowns from Technical Context** above:
+characters/
+├── protagonist-name.md     # Character profile & arc tracking
+├── antagonist-name.md
+└── ...
+
+world-building/
+├── rules.md                # World mechanics and constraints
+├── locations.md            # Setting descriptions
+├── history.md              # Pre-story timeline
+└── culture.md              # Social structures
+
+foreshadowing/
+└── tracker.md              # Master foreshadowing log
+
+timeline/
+└── master.md               # Chronological event tracker
+```
+
+## Phase 0: Research & Clarification
+
+**Purpose**: Resolve all uncertainties and gather necessary knowledge for authentic writing
+
+### Research Tasks
+1. **Extract unknowns from Narrative Context** above:
    - For each NEEDS CLARIFICATION → research task
-   - For each dependency → best practices task
-   - For each integration → patterns task
+   - For historical settings → accuracy verification
+   - For technical details → expert consultation or reading
 
-2. **Generate and dispatch research agents**:
+2. **Generate research queries**:
    ```
-   For each unknown in Technical Context:
-     Task: "Research {unknown} for {feature context}"
-   For each technology choice:
-     Task: "Find best practices for {tech} in {domain}"
+   For each NEEDS CLARIFICATION in outline:
+     Task: "Research {topic} for {story context}"
+   For each historical/technical element:
+     Task: "Verify accuracy of {element} in {time period/domain}"
+   For each cultural element:
+     Task: "Understand {cultural practice} to avoid stereotypes"
    ```
 
 3. **Consolidate findings** in `research.md` using format:
-   - Decision: [what was chosen]
-   - Rationale: [why chosen]
-   - Alternatives considered: [what else evaluated]
+   - **Topic**: [What was researched]
+   - **Findings**: [Key facts/details discovered]
+   - **Application**: [How it informs the story]
+   - **Sources**: [References for fact-checking]
 
 **Output**: research.md with all NEEDS CLARIFICATION resolved
 
-## Phase 1: Design & Contracts
-*Prerequisites: research.md complete*
+## Phase 1: Detailed Scene Planning
 
-1. **Extract entities from feature spec** → `data-model.md`:
-   - Entity name, fields, relationships
-   - Validation rules from requirements
-   - State transitions if applicable
+*Prerequisites: research.md complete, all uncertainties resolved*
 
-2. **Generate API contracts** from functional requirements:
-   - For each user action → endpoint
-   - Use standard REST/GraphQL patterns
-   - Output OpenAPI/GraphQL schema to `/contracts/`
+### 1. Scene Breakdown (`scene-breakdown.md`)
 
-3. **Generate contract tests** from contracts:
-   - One test file per endpoint
-   - Assert request/response schemas
-   - Tests must fail (no implementation yet)
+For each chapter, create detailed scene plans:
 
-4. **Extract test scenarios** from user stories:
-   - Each story → integration test scenario
-   - Quickstart test = story validation steps
+```markdown
+## Chapter [X]: [Chapter Title]
 
-5. **Update agent file incrementally** (O(1) operation):
-   - Run `{SCRIPT}`
-     **IMPORTANT**: Execute it exactly as specified above. Do not add or remove any arguments.
-   - If exists: Add only NEW tech from current plan
-   - Preserve manual additions between markers
-   - Update recent changes (keep last 3)
-   - Keep under 150 lines for token efficiency
-   - Output to repository root
+### Scene 1: [Scene Name]
+- **Time**: [Morning/Afternoon/Evening, specific if relevant]
+- **Location**: [Specific place, referencing /world-building/locations.md]
+- **POV Character**: [If multiple POVs]
+- **Scene Purpose**: 
+  - [ ] Advance plot (which thread: [main/subplot A/subplot B])
+  - [ ] Develop character ([which character], [what aspect])
+  - [ ] Reveal information ([what information])
+  - [ ] Plant foreshadowing ([Foreshadowing ID])
+- **Characters Present**: [List with roles in scene]
+- **Emotional Arc**: [Starting emotion] → [Conflict/catalyst] → [Ending emotion]
+- **Key Events**:
+  1. [Event 1 - what happens physically]
+  2. [Event 2 - dialogue/revelation]
+  3. [Event 3 - decision/action point]
+- **Foreshadowing**:
+  - **Plant**: [New foreshadowing - assign ID, log in tracker]
+  - **Hint**: [Existing foreshadowing to subtly reference]
+  - **Payoff**: [Foreshadowing to resolve - mark in tracker]
+- **Continuity Check**:
+  - Character locations align with timeline: [ ]
+  - Character knowledge consistent: [ ]
+  - World state accurate: [ ]
+- **Sensory Details to Include**: [Key sensory anchors for immersion]
+- **Tone**: [How this scene feels - tense/tender/ominous/hopeful]
+- **Estimated Word Count**: [e.g., 800-1200 words]
 
-**Output**: data-model.md, /contracts/*, failing tests, quickstart.md, agent-specific file
+### Scene 2: [Scene Name]
+[Same structure repeated]
+```
 
-## Phase 2: Task Planning Approach
+### 2. Character State Tracking (`character-states.md`)
+
+Track character progression chapter-by-chapter:
+
+```markdown
+## [Character Name] - Emotional Journey
+
+### Chapter [X]: [Chapter Title]
+- **Physical State**: [Injured/Healthy/Exhausted/Rested]
+- **Emotional State**: [Primary emotion and why]
+- **Knowledge**: [What they now know that they didn't before]
+- **Relationships**: [Changes in how they relate to others]
+- **Goals**: [Current objective - has it changed?]
+- **Internal Conflict**: [Psychological struggle]
+- **Arc Progress**: [Where are they in their character arc? X%]
+- **Key Quote/Action**: [Defining moment from this chapter]
+```
+
+### 3. Continuity Verification (`continuity-check.md`)
+
+Cross-reference all story elements:
+
+```markdown
+## Continuity Check for Chapters [Range]
+
+### Timeline Verification
+| Chapter | In-Story Date | Events | Character Locations | Duration |
+|---------|---------------|--------|---------------------|----------|
+| 001 | Day 1, Morning | [Events] | [Who is where] | 3 hours |
+| 002 | Day 1, Afternoon | [Events] | [Who is where] | 2 hours |
+
+### Foreshadowing Status
+| ID | Setup Chapter | Type | Status | Payoff Plan |
+|----|---------------|------|--------|-------------|
+| F001 | 003 | Item | PLANTED | Chapter 045 |
+| F012 | [Previous arc] | Prophecy | HINTED | This arc, ch 030-035 |
+
+### World Consistency Check
+- [ ] No magic system rule violations
+- [ ] Geography consistent (travel times realistic)
+- [ ] Technology level consistent
+- [ ] Cultural practices align with `/world-building/culture.md`
+
+### Character Consistency Check
+- [ ] No personality contradictions
+- [ ] Skills/knowledge track correctly (no sudden expertise)
+- [ ] Physical descriptions match across chapters
+- [ ] Speech patterns consistent
+```
+
+## Phase 2: Writing Task Planning Approach
 *This section describes what the /tasks command will do - DO NOT execute during /plan*
 
 **Task Generation Strategy**:
-- Load `.specify/templates/tasks-template.md` as base
-- Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
-- Each contract → contract test task [P]
-- Each entity → model creation task [P] 
-- Each user story → integration test task
-- Implementation tasks to make tests pass
+- Load `/templates/tasks-template.md` as base
+- Generate writing tasks from Phase 1 scene breakdowns
+- Each scene → writing task [P] (parallelizable if different chapters)
+- Each chapter → revision task (after all scenes complete)
+- Quality checks → foreshadowing update, timeline update, character state update
 
-**Ordering Strategy**:
-- TDD order: Tests before implementation 
-- Dependency order: Models before services before UI
-- Mark [P] for parallel execution (independent files)
+**Task Ordering Strategy**:
+- Chronological chapter order (001 → 002 → 003...)
+- Within chapter: Scene 1 → Scene 2 → Scene 3 → Integration → Revision
+- Mark [P] for scenes in different chapters (can be written in parallel)
+- Sequential for scenes in same chapter
 
-**Estimated Output**: 25-30 numbered, ordered tasks in tasks.md
+**Estimated Output**: 150-200 writing tasks for 50-chapter arc
 
 **IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
 
-## Phase 3+: Future Implementation
+## Phase 3+: Future Execution
 *These phases are beyond the scope of the /plan command*
 
-**Phase 3**: Task execution (/tasks command creates tasks.md)  
-**Phase 4**: Implementation (execute tasks.md following constitutional principles)  
-**Phase 5**: Validation (run tests, execute quickstart.md, performance validation)
+**Phase 3**: Writing task execution (/tasks command creates tasks.md)  
+**Phase 4**: First draft writing (/implement command executes tasks.md)  
+**Phase 5**: Revision & consistency audit (automated checks + human review)
 
-## Complexity Tracking
+## Narrative Concerns
 *Fill ONLY if Constitution Check has violations that must be justified*
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Concern | Justification | Alternative Rejected Because |
+|---------|---------------|------------------------------|
+| [e.g., Character acts out-of-character] | [Specific story reason] | [Why consistent behavior wouldn't work] |
+| [e.g., Timeline compressed unrealistically] | [Narrative pacing need] | [Why realistic pacing would hurt story] |
 
+**NOTE**: Aim for ZERO entries. Concerns should be resolved in planning, not justified.
 
 ## Progress Tracking
 *This checklist is updated during execution flow*
 
 **Phase Status**:
 - [ ] Phase 0: Research complete (/plan command)
-- [ ] Phase 1: Design complete (/plan command)
-- [ ] Phase 2: Task planning complete (/plan command - describe approach only)
-- [ ] Phase 3: Tasks generated (/tasks command)
-- [ ] Phase 4: Implementation complete
-- [ ] Phase 5: Validation passed
+- [ ] Phase 1: Scene planning complete (/plan command)
+- [ ] Phase 2: Task planning approach described (/plan command)
+- [ ] Phase 3: Writing tasks generated (/tasks command)
+- [ ] Phase 4: First draft complete (/implement command)
+- [ ] Phase 5: Revisions complete
 
 **Gate Status**:
 - [ ] Initial Constitution Check: PASS
-- [ ] Post-Design Constitution Check: PASS
+- [ ] Post-Planning Constitution Check: PASS
 - [ ] All NEEDS CLARIFICATION resolved
-- [ ] Complexity deviations documented
+- [ ] Narrative concerns addressed (ideally ZERO)
+- [ ] Foreshadowing fully mapped
+- [ ] Timeline verified
+- [ ] Character arcs tracked
+
+**Quality Metrics**:
+- Total Chapters Planned: [X]
+- Total Scenes: [Y]
+- Foreshadowing Planted: [Z]
+- Foreshadowing Resolved: [W]
+- Character Arcs Tracked: [N]
 
 ---
-*Based on Constitution v2.1.1 - See `/memory/constitution.md`*
+*Based on Novel Writing Constitution v1.0 - See `/memory/constitution.md`*
