@@ -164,7 +164,74 @@ AI 会系统性地问你问题，例如：
   ← 可以和其他章节并行写作
 ```
 
-### 阶段 5：执行写作（/implement）
+---
+
+### 阶段 5.5：质量预检（/analyze）⭐ 关键步骤！
+
+**在开始写作之前**，运行质量检查来检查你的**规划文档**（而非实际内容）：
+
+```
+/analyze
+```
+
+**检查内容**（都是检查规划，不是检查已写的文字）：
+- ✅ 所有伏笔都在 Foreshadowing Map 中有规划好的回收章节吗？
+- ✅ scene-breakdown.md 中的时间线有矛盾吗？
+- ✅ 角色弧线在 character-states.md 中规划完整吗？
+- ✅ 场景分解覆盖 spec.md 中的所有情节点了吗？
+- ✅ 有没有悬空的情节线（提到但没规划展开）？
+- ✅ Constitution 中的世界观规则在计划中有违反吗？
+
+**质量报告示例**：
+
+```markdown
+### Novel Quality Analysis Report (PLANNING PHASE)
+
+| ID | Category | Severity | Location | Summary | Recommendation |
+|----|----------|----------|----------|---------|----------------|
+| F1 | Foreshadowing | HIGH | F023 in Ch12 | 神秘宝剑在spec中提及，但scene-breakdown没有回收场景 | 在Ch45-50添加回收场景 |
+| T1 | Timeline | CRITICAL | Ch15 vs Ch18 plan | 主角在计划中同时出现在两地 | 修正scene-breakdown中的位置 |
+| C1 | Character | HIGH | Ch22 scene plan | 场景描述让主角表现懦弱，违背性格设定 | 重写Ch22场景计划 |
+
+**Foreshadowing Planning Status**: 18/23 mapped to scenes (78%)
+**Timeline Planning**: 1 critical contradiction found
+**Character Arc Planning**: 1 inconsistency in scene descriptions
+
+**Next Actions**:
+⚠️ CRITICAL issues found - Must fix BEFORE /implement
+1. Fix timeline contradiction in scene-breakdown.md Ch15-18
+2. Add foreshadowing payoff scenes for F023
+3. Revise Ch22 scene to align with character traits
+
+Fix these → Re-run /analyze → When clean → Run /implement
+```
+
+**为什么这一步如此重要？**
+
+| 现在修改规划 | 写作后修改 |
+|------------|-----------|
+| ⏱️ 5-10分钟 | ⏱️ 数天甚至数周 |
+| 📝 改几行文字 | 📝 重写数万字 |
+| 😊 轻松愉快 | 😰 心力交瘁 |
+| 💰 成本：几乎为零 | 💰 成本：巨大 |
+
+**典型发现**：
+- 伏笔F005在第3章提到父母身世，但整个50章规划中都没有回收计划 → 现在加上！
+- 时间线显示主角第15章在宗门，第16章突然在千里之外的城市，但中间没有旅程场景 → 现在补充！
+- 角色张阳的性格设定是"直率莽撞"，但第30章的场景却让他"深思熟虑制定复杂计划" → 现在修正！
+
+**流程**：
+1. 运行 `/analyze`
+2. 如果有 CRITICAL 或 HIGH 问题：修改 spec.md、plan.md 或 scene-breakdown.md
+3. 重新运行 `/analyze` 验证修复
+4. 重复直到报告清洁
+5. 运行 `/implement` 开始写作（此时已避免了90%的坑）
+
+---
+
+### 阶段 6：执行写作（/implement）
+
+**确保 `/analyze` 检查通过后**，开始实际写作：
 
 开始实际写作：
 
